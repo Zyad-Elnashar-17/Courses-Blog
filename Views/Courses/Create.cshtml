@@ -1,0 +1,54 @@
+﻿@model Crud.ViewModels.CreateCourseFormViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<p>Create New Course</p>
+
+<form asp-controller="Courses" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <label asp-for="Title" class="form-label mt-4"></label>
+                <input type="text" class="form-control" asp-for="Title" placeholder="Course Title">
+                <span asp-validation-for="Title" class="text-bg-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Price" class="form-label mt-4"> price </label>
+                <input type="text" class="form-control" asp-for="Price">
+                <span asp-validation-for="Price" class="text-bg-danger"></span>
+            </div>
+            <div>
+                <label asp-for="SelectedInstructors" class="form-label mt-4"></label>
+                <select class="form-select" asp-for="SelectedInstructors" asp-items="Model.Instructors" multiple>
+                </select>
+                <span asp-validation-for="SelectedInstructors" class="text-bg-danger"></span>
+            </div>
+            <div>
+                <label for="Description" class="form-label mt-4"> Description </label>
+                <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-bg-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Cover" class="form-label mt-4"></label>
+                <input type="file" class="form-control" asp-for="Cover" data-rule-extension="@FileSettings.AllowedExtensions.Replace(".",String.Empty)"
+                       data-msg-extension="Not allowed extension"
+                       data-rule-filesize="@FileSettings.MaxFileSizeInBytes"
+                       data-msg-filesize="Maximum allowed size is @FileSettings.MaxFileSizeInMB MB">
+                <small class="form-text text-muted">only @FileSettings.AllowedExtensions files are allowed with max size @(FileSettings.MaxFileSizeInMB)</small>
+                <span asp-validation-for="Cover" class="text-bg-danger d-block"></span>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Create</button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center overflow-hidden">
+            <img class="cover-preview d-none" alt="Cover" />
+        </div>
+    </div>
+</form>
+
+
+                @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/filesize-validator.js" asp-append-version="true"></script>
+    <script src="~/js/cover-form.js" asp-append-version="true"></script>
+}
